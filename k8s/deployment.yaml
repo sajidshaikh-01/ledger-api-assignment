@@ -17,12 +17,13 @@ spec:
     spec:
       containers:
         - name: ledger-api
-          image: ledger-api:starter
-          imagePullPolicy: IfNotPresent
-          env:
-            - name: STRIPE_API_KEY
-              value: "sk_live_9f3a2b7c1e4d8REDACTED"
-            - name: DB_PASSWORD
-              value: "P@ssw0rd123"
+          image: ledger-api:v1
+          imagePullPolicy: Never
           ports:
             - containerPort: 8080
+
+          envFrom:
+            - configMapRef:
+                name: ledger-api-config
+            - secretRef:
+                name: ledger-api-secret
