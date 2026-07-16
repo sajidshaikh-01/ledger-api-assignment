@@ -22,6 +22,8 @@ spec:
           - resources:
               kinds:
                 - Pod
+              namespaces:
+                - payments
 
       validate:
         message: "Containers must set securityContext.readOnlyRootFilesystem=true."

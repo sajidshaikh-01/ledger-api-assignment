@@ -1,0 +1,9 @@
+title = "Gitleaks configuration"
+
+[allowlist]
+description = "Allow encrypted Bitnami SealedSecrets"
+
+paths = [
+  '''gitops/ledger-api/sealed-secret\.yaml''',
+  '''k8s/sealed-secret\.yaml'''
+]

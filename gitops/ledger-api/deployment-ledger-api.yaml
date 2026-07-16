@@ -30,7 +30,7 @@ spec:
 
       containers:
         - name: ledger-api
-          image: ledger-api:v2
+          image: image: ghcr.io/sajidshaikh-01/ledger-api:latest
           imagePullPolicy: Never
 
           ports:
