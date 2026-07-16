@@ -72,7 +72,7 @@ jobs:
           tags: ledger-api:latest
 
       - name: Scan Docker Image with Trivy
-        uses: aquasecurity/trivy-action@0.24.0
+        uses: aquasecurity/trivy-action@master
         with:
           image-ref: ledger-api:latest
           format: table
