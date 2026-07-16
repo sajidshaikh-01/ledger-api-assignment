@@ -114,3 +114,50 @@ jobs:
         run: |
           cosign sign --yes \
             ghcr.io/${{ github.repository_owner }}/ledger-api:latest
+
+  slsa-provenance:
+    name: Generate SLSA Provenance
+    runs-on: ubuntu-latest
+    needs: cosign-sign
+
+    permissions:
+      packages: write
+      id-token: write
+
+    steps:
+      - name: Login to GitHub Container Registry
+        uses: docker/login-action@v3
+        with:
+          registry: ghcr.io
+          username: ${{ github.actor }}
+          password: ${{ secrets.GITHUB_TOKEN }}
+
+      - name: Install Cosign
+        uses: sigstore/cosign-installer@v3
+
+      - name: Generate SLSA Provenance Attestation
+        env:
+          COSIGN_EXPERIMENTAL: "true"
+        run: |
+          cat > predicate.json <<EOF
+          {
+            "buildType": "https://github.com/Attestations/GitHubActions@v1",
+            "builder": {
+              "id": "${{ github.workflow }}"
+            },
+            "invocation": {
+              "configSource": {
+                "uri": "https://github.com/${{ github.repository }}",
+                "digest": {
+                  "sha1": "${{ github.sha }}"
+                }
+              }
+            }
+          }
+          EOF
+
+          cosign attest \
+            --yes \
+            --predicate predicate.json \
+            --type slsaprovenance \
+            ghcr.io/${{ github.repository_owner }}/ledger-api:latest
