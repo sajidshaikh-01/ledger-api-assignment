@@ -1,0 +1,27 @@
+name: Secure CI/CD Pipeline
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+permissions:
+  contents: write
+  packages: write
+  id-token: write
+  security-events: write
+env:
+  IMAGE_NAME: ghcr.io/${{ github.repository_owner }}/ledger-api
+jobs:
+  gitleaks:
+    name: Secrets Scan
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Run Gitleaks
+        uses: gitleaks/gitleaks-action@v2
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
