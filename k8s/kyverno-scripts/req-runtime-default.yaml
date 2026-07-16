@@ -1,0 +1,40 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-seccomp-runtime-default
+  annotations:
+    policies.kyverno.io/title: Require Seccomp RuntimeDefault
+    policies.kyverno.io/category: Pod Security
+    policies.kyverno.io.severity: medium
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Pods must configure seccompProfile.type=RuntimeDefault either at the
+      pod level or container level to reduce the available Linux system calls.
+spec:
+  validationFailureAction: Enforce
+  background: true
+
+  rules:
+    - name: require-seccomp-runtime-default
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+
+      validate:
+        message: "Pods must configure seccompProfile.type=RuntimeDefault at either the pod or container level."
+
+        anyPattern:
+
+          - spec:
+              securityContext:
+                seccompProfile:
+                  type: RuntimeDefault
+
+          - spec:
+              containers:
+                - name: "*"
+                  securityContext:
+                    seccompProfile:
+                      type: RuntimeDefault

@@ -1,0 +1,52 @@
+apiVersion: kyverno.io/v1
+kind: ClusterPolicy
+metadata:
+  name: require-restricted-security-context
+  annotations:
+    policies.kyverno.io/title: Require Restricted Security Context
+    policies.kyverno.io/category: Pod Security
+    policies.kyverno.io/severity: high
+    policies.kyverno.io/subject: Pod
+    policies.kyverno.io/description: >-
+      Containers must drop all Linux capabilities, must not add capabilities
+      back, and must disable privilege escalation. This helps enforce the
+      Kubernetes Restricted Pod Security Standard.
+spec:
+  validationFailureAction: Enforce
+  background: true
+
+  rules:
+    - name: require-drop-all-capabilities
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+
+      validate:
+        message: "Containers must drop ALL Linux capabilities and must not add capabilities."
+        pattern:
+          spec:
+            containers:
+              - name: "*"
+                securityContext:
+                  capabilities:
+                    drop:
+                      - ALL
+                    =(add): null
+
+    - name: require-no-privilege-escalation
+      match:
+        any:
+          - resources:
+              kinds:
+                - Pod
+
+      validate:
+        message: "Containers must set allowPrivilegeEscalation=false."
+        pattern:
+          spec:
+            containers:
+              - name: "*"
+                securityContext:
+                  allowPrivilegeEscalation: false
