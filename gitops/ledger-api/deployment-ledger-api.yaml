@@ -30,7 +30,7 @@ spec:
 
       containers:
         - name: ledger-api
-          image: ghcr.io/sajidshaikh-01/ledger-api:latest
+          image: ghcr.io/sajidshaikh-01/ledger-api:${{ github.sha }}
           imagePullPolicy: Always
 
           ports:
