@@ -205,10 +205,8 @@ file (e.g. in `k8s/evidence/` or a new `app/evidence/` folder):
 | CI pipeline green after fix | `ci-pipeline-post-fix.png` | GitHub Actions run showing Semgrep/Trivy passing after the commit |
 
 Markdown snippet to embed each once added:
-```markdown
 ![Semgrep finding](./evidence/semgrep-ssrf-finding.png)
 ![SSRF blocked](./evidence/ssrf-blocked.png)
-```
 
 ---
 
@@ -219,7 +217,5 @@ an application-code fix, not an infrastructure change — keeping it separate
 from `k8s/README.md` (Task 1 hardening) and the Task 2 CI/GitOps README.
 Link to it from your top-level `README.md`:
 
-```markdown
 - [Application security fixes](./app/SECURITY-FIXES.md) — SSRF and unsafe
   YAML deserialization findings and remediation.
-```

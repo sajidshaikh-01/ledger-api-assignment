@@ -195,17 +195,13 @@ content is encrypted, not a plaintext secret. This confirmed the hard-block
 policy works as intended before the allowlist was added.
 
 `gitops/evidence/01-gitleaks-false-positive-detected.png`
-```markdown
 ![Gitleaks false positive detected](./evidence/01-gitleaks-false-positive-detected.png)
-```
 
 After adding `.gitleaks.toml` with a scoped allowlist entry for the
 SealedSecret path, the same scan passes cleanly:
 
 `gitops/evidence/02-gitleaks-no-leaks-after-fix.png`
-```markdown
 ![No leaks detected after allowlist fix](./evidence/02-gitleaks-no-leaks-after-fix.png)
-```
 
 ### Full pipeline run — all gates green
 
@@ -213,9 +209,7 @@ Complete run showing Secrets Scan → SAST → Build/Scan → Sign → SLSA →
 GitOps update, all succeeded end to end (1m 50s total).
 
 `gitops/evidence/03-full-pipeline-run-success.png`
-```markdown
 ![Full pipeline run, all jobs green](./evidence/03-full-pipeline-run-success.png)
-```
 
 ### SAST — Semgrep genuinely caught the SSRF finding
 
@@ -227,24 +221,18 @@ did — direct evidence the fail-policy documentation's attribution is
 accurate, not assumed.
 
 `gitops/evidence/04-semgrep-ssrf-finding.png`
-```markdown
 ![Semgrep SSRF finding](./evidence/04-semgrep-ssrf-finding.png)
-```
 
 ### Trivy image scan + SARIF upload
 
 `gitops/evidence/05-trivy-scan-log.png`
-```markdown
 ![Trivy scan log](./evidence/05-trivy-scan-log.png)
-```
 
 SARIF upload step and the "verify image is pullable" gate both succeeding
 in the same job:
 
 `gitops/evidence/06-trivy-sarif-upload-and-pull-verify.png`
-```markdown
 ![Trivy SARIF upload and pull verification](./evidence/06-trivy-sarif-upload-and-pull-verify.png)
-```
 
 ### Cosign keyless signing (by digest)
 
@@ -254,9 +242,7 @@ Pushing signature to: ghcr.io/sajidshaikh-01/ledger-api
 ```
 
 `gitops/evidence/07-cosign-sign-log.png`
-```markdown
 ![Cosign keyless sign log](./evidence/07-cosign-sign-log.png)
-```
 
 ### SLSA provenance attestation
 
@@ -265,9 +251,7 @@ tlog entry created with index: 2188397895
 ```
 
 `gitops/evidence/08-slsa-provenance-attest-log.png`
-```markdown
 ![SLSA provenance attestation log](./evidence/08-slsa-provenance-attest-log.png)
-```
 
 ### GHCR — signed and attested artifacts published
 
@@ -275,9 +259,7 @@ Package page showing the image digest alongside its `.sig` and `.att`
 artifacts, confirming the full sign + attest chain reached the registry.
 
 `gitops/evidence/09-ghcr-signed-attested-tags.png`
-```markdown
 ![GHCR signed and attested tags](./evidence/09-ghcr-signed-attested-tags.png)
-```
 
 ### GitOps manifest auto-update (CI → Git)
 
@@ -291,9 +273,7 @@ without any manual editing:
 ```
 
 `gitops/evidence/10-gitops-manifest-auto-commit.png`
-```markdown
 ![CI auto-commits new image tag to GitOps manifest](./evidence/10-gitops-manifest-auto-commit.png)
-```
 
 ### ArgoCD — automated sync, Healthy, authored by the CI bot
 
@@ -301,9 +281,7 @@ Confirms ArgoCD picked up the bot's commit automatically (not a manual
 sync) — `Author: github-actions[bot]`, all resources `Healthy`.
 
 `gitops/evidence/11-argocd-healthy-automated-sync.png`
-```markdown
 ![ArgoCD healthy, synced automatically by CI bot commit](./evidence/11-argocd-healthy-automated-sync.png)
-```
 
 ### Drift detection + self-heal
 
@@ -312,9 +290,7 @@ drift (`OutOfSync`), and self-heal reverting back to Git's declared state
 (3 replicas) within seconds:
 
 `gitops/evidence/12-drift-detection-self-heal.png`
-```markdown
 ![Drift detection and self-heal terminal output](./evidence/12-drift-detection-self-heal.png)
-```
 
 ### Cosign verify (pending)
 
