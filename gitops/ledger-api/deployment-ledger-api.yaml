@@ -30,7 +30,7 @@ spec:
 
       containers:
         - name: ledger-api
-          image: ghcr.io/sajidshaikh-01/ledger-api:2654853663ad5b71083a1acd84cab0f04e073974
+          image: ghcr.io/sajidshaikh-01/ledger-api:11d2f31bb00641bf607480d8d5765b28d4c85dba
           imagePullPolicy: Always
 
           ports:
